@@ -60,9 +60,6 @@ func (card IDCard) Valid() bool {
 	}
 	// char check
 	x := id[IDCardLength-1]
-	if x == 'x' {
-		x = 'X'
-	}
 	switch x {
 	case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'x', 'X':
 	default:
