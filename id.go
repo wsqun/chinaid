@@ -49,6 +49,9 @@ func SetLocation(loc *time.Location)  {
 // Valid 判断身份证号是否合法
 func (card IDCard) Valid() bool {
 	id := string(card)
+	if len(id) == 15 {
+		id,_ = Transform15To18(id)
+	}
 	// basic check
 	switch {
 	case len(id) != 18:
@@ -57,6 +60,9 @@ func (card IDCard) Valid() bool {
 	}
 	// char check
 	x := id[IDCardLength-1]
+	if x == 'x' {
+		x = 'X'
+	}
 	switch x {
 	case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'x', 'X':
 	default:
@@ -90,6 +96,9 @@ func (card IDCard) Decode() (IDCardDetail, error) {
 		return icd, ErrInvalidIDCardNo
 	}
 	id := string(card)
+	if len(id) == 15 {
+		id,_ = Transform15To18(id)
+	}
 
 	// parse address code
 	ac, err := strconv.Atoi(id[:6])
